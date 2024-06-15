@@ -41,6 +41,10 @@ jobs:
      - name: Check the Network status
        run: |
         netstat -an | grep 3306
+
+     - name: Wait for time to start the migration
+       run: |
+        sleep 5 
         
      - name: Migrate the database
        run: |
