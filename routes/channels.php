@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($users,$email, $id) {
     return (int) $users->id === (int) $id;
 });
+
+

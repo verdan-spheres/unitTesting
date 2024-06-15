@@ -25,7 +25,11 @@ jobs:
        run: |
            cp .env.ci .env
            cp .env.ci  .env.testing
+     - name: install mysql 
+       run: |
+         mysql:latest
 
      - name: compilaction 
        run: |
          php artisan key:generate
+
