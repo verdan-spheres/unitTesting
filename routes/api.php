@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:apis')->group(functions () {
   Route::post('/object', [ItemController::class, 'store']);
   Route::get('/objects/get_all_records', [ItemController::class, 'getAllRecords']);
   Route::get('/object/{key}', [ItemController::class, 'show']);
