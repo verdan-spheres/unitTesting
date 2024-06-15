@@ -30,9 +30,9 @@ jobs:
         docker run -d \
         -e MYSQL_ALLOW_EMPTY_PASSWORD=false \
         -e MYSQL_ROOT_PASSWORD=password \
-        -e MYSQL_DATABASE =test \
+        -e MYSQL_DATABASE=test \
         -p 3306:3306 \
-            mysql:latest
+         mysql:latest
 
      - name: Check docker status
        run: |
