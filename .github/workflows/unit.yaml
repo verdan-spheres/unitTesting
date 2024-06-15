@@ -27,7 +27,7 @@ jobs:
            cp .env.ci  .env.testing
      - name: install mysql 
        run: |
-         mysql:latest
+        docker run -d -p 3306:3306 mysql:latest
 
      - name: compilaction 
        run: |
