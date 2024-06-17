@@ -59,12 +59,12 @@ jobs:
      - name: Login to DockerHub
        uses: docker/login-action@v1
        with:
-        username: ${{env.DOCKERHUB_USERNAME}}
-        password: ${{env.DOCKERHUB_TOKEN}}
+        username: ${{env.ci.DOCKERHUB_USERNAME}}
+        password: ${{env.ci.DOCKERHUB_TOKEN}}
      - name: Tag image
-       run: docker tag hello-wops${{env.DOCKERHUB_USERNAME}}/hello-wops
+       run: docker tag hello-wops${{env.ci.DOCKERHUB_USERNAME}}/hello-wops
      - name: Push Docker image
-       run: docker push ${{env.DOCKERHUB_USERNAME}}/hello-wops
+       run: docker push ${{env.ci.DOCKERHUB_USERNAME}}/hello-wops
 
         
     
