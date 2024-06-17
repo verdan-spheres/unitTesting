@@ -9,6 +9,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:latest
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USERNAME: root
+          MYSQL_DATABASE: test
     steps:
      - name: checkout the code
        uses: actions/checkout@v4
@@ -24,15 +34,8 @@ jobs:
      - name: create environment 
        run: |
            cp .env.ci .env
+          
            cp .env.ci  .env.testing
-     - name: install mysql 
-       run: |
-        docker run -d \
-        -e MYSQL_ALLOW_EMPTY_PASSWORD=false \
-        -e MYSQL_ROOT_PASSWORD=password \
-        -e MYSQL_DATABASE=test \
-        -p 3306:3306 \
-         mysql:latest
 
      - name: Check docker status
        run: |
@@ -44,7 +47,7 @@ jobs:
 
      - name: Wait for time to start the migration
        run: |
-        sleep 5 
+        sleep 15 
         
      - name: Migrate the database
        run: |
@@ -57,4 +60,20 @@ jobs:
      - name: Run the unit test
        run: |
         php artisan test
+
+     - name: dockernize the application
+       run: |
+         docker build -t hello-wops
+     - name: Login to DockerHub
+       uses: docker/login-action@v1
+       with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+     - name: Tag image
+       run: docker tag hello-wops${{ secrets.DOCKERHUB_USERNAME }}/hello-wops
+     - name: Push Docker image
+       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello-wops
+
+        
+    
 
