@@ -37,6 +37,8 @@ jobs:
           
            cp .env.ci  .env.testing
 
+           cp .secrets .secrets
+
      - name: Check docker status
        run: |
         docker ps
@@ -59,12 +61,12 @@ jobs:
      - name: Login to DockerHub
        uses: docker/login-action@v1
        with:
-        username: ${{env.ci.DOCKERHUB_USERNAME}}
-        password: ${{env.ci.DOCKERHUB_TOKEN}}
+        username: ${{secrets.DOCKERHUB_USERNAME}}
+        password: ${{secrets.DOCKERHUB_TOKEN}}
      - name: Tag image
-       run: docker tag hello-wops${{env.ci.DOCKERHUB_USERNAME}}/hello-wops
+       run: docker tag hello-wops${{secrets.DOCKERHUB_USERNAME}}/hello-wops
      - name: Push Docker image
-       run: docker push ${{env.ci.DOCKERHUB_USERNAME}}/hello-wops
+       run: docker push ${{secrets.DOCKERHUB_USERNAME}}/hello-wops
 
         
     
