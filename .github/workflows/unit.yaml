@@ -55,7 +55,7 @@ jobs:
 
      - name: dockernize the application
        run: |
-         docker build -t hello-wops
+         docker build -t hello-wops .
      - name: Login to DockerHub
        uses: docker/login-action@v1
        with:
