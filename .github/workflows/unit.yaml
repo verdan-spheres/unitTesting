@@ -62,6 +62,21 @@ jobs:
        env:
         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
 
+     - name: Run Trivy vulnerability scanner with rootfs command
+       uses: aquasecurity/trivy-action@0.20.0
+       with:
+          scan-type: 'rootfs'
+          scan-ref: 'rootfs-example-binary'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
+
+     - name: Upload Trivy scan results to GitHub Security tab
+       uses: github/codeql-action/upload-sarif@v2
+       with:
+          sarif_file: 'trivy-results.sarif'
+
      - name: dockernize the application
        run: |
          docker build -t hello-wops .
