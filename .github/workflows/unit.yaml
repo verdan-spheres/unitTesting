@@ -60,7 +60,7 @@ jobs:
      - name: SonarCloud Scan
        uses: sonarsource/sonarcloud-github-action@v2.1.0
        env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
 
      - name: dockernize the application
        run: |
@@ -74,7 +74,7 @@ jobs:
 
      - name: Tag image
        run: docker tag hello-wops ${{ secrets.DOCKERHUB_USERNAME }}/hello-wops
-       
+
      - name: Push Docker image
        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello-wops
         
