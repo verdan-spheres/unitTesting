@@ -53,24 +53,30 @@ jobs:
        run: |
          php artisan key:generate
 
-     - name: SonarCloud Scan
-       uses: sonarsource/sonarcloud-github-action@v2.1.0 
+     - uses: actions/checkout@v4
        with:
-        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+           # Disabling shallow clone is recommended for improving relevancy of reporting
+           fetch-depth: 0
+     - name: SonarCloud Scan
+       uses: sonarsource/sonarcloud-github-action@v2.1.0
+       env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
      - name: dockernize the application
        run: |
          docker build -t hello-wops .
+
      - name: Login to DockerHub
        uses: docker/login-action@v1
        with:
         username: ${{secrets.DOCKERHUB_USERNAME}}
         password: ${{secrets.DOCKERHUB_TOKEN}}
+
      - name: Tag image
        run: docker tag hello-wops ${{ secrets.DOCKERHUB_USERNAME }}/hello-wops
+       
      - name: Push Docker image
        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello-wops
-
         
     
 
