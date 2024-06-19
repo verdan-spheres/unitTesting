@@ -49,7 +49,7 @@ jobs:
        run: |
         sleep 15 
 
-     - name: compilaction 
+     - name: compile the code
        run: |
          php artisan key:generate
 
